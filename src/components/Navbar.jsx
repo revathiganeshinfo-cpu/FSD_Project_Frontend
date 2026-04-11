@@ -45,7 +45,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 flex items-center justify-between px-9 py-4 transition-all duration-4000
+      className={`fixed top-0 w-full z-50 flex items-center justify-between px-4 md:px-9 py-3 md:py-4 flex-wrap transition-all duration-4000
       ${
         scrolled
           ? "bg-[#0d0d0d]/90 backdrop-blur-md border-b border-[#1a1a1a] shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
@@ -55,7 +55,7 @@ export default function Navbar() {
 
       <Link to="/" className="flex items-center gap-2 no-underline">
       
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
 
 <img
   src={logo}
@@ -78,7 +78,11 @@ drop-shadow-[0_10px_30px_rgba(255,215,0,0.5)]"
         
       </Link>
 
-      <div className="flex items-center bg-[#1a1a1a]/80 backdrop-blur-md border border-[#2e2e2e] rounded-full p-1 gap-1 shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)]">
+      <div className="flex items-center overflow-x-auto whitespace-nowrap
+bg-[#1a1a1a]/80 backdrop-blur-md border border-[#2e2e2e]
+rounded-full p-1 gap-1 shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)]
+max-w-[60%] md:max-w-none"
+>
         {mainLinks.map((link) => {
           const isActive = activePath === link.path;
 
@@ -86,7 +90,7 @@ drop-shadow-[0_10px_30px_rgba(255,215,0,0.5)]"
             <Link
               key={link.name}
               to={link.path}
-              className={`px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200
+              className={`px-3 md:px-6 py-1 md:py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200
                 ${
                   isActive
                     ? "text-[#e8e8e8] bg-[#2e2e2e] shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.06)]"
@@ -100,19 +104,19 @@ drop-shadow-[0_10px_30px_rgba(255,215,0,0.5)]"
         })}
       </div>
 
-      <div className="flex items-center gap-5">
-        {!user ? (
+<div className="flex items-center gap-2 md:gap-5 flex-shrink-0">
+          {!user ? (
           <>
             <Link
               to="/register"
-              className="text-[15px] text-[#6a6a6a] hover:text-[#e8e8e8] transition"
+              className="text-[15px] md:text-[15px] text-[#6a6a6a] hover:text-[#e8e8e8] transition"
             >
               Register
             </Link>
 
             <Link
               to="/login"
-              className="px-7 py-2 rounded-full border border-[#3a3a3a] text-[#d0d0d0] hover:bg-[#222] hover:border-[#555] hover:text-white transition"
+              className="px-4 md:px-7 py-1 md:py-2 rounded-full border border-[#3a3a3a] text-[#d0d0d0] hover:bg-[#222] hover:border-[#555] hover:text-white transition text-sm md:text-base"
             >
               Login
             </Link>
@@ -120,8 +124,7 @@ drop-shadow-[0_10px_30px_rgba(255,215,0,0.5)]"
         ) : (
           <button
             onClick={handleLogout}
-            className="px-7 py-2 rounded-full border border-[#3a3a3a] text-[#d0d0d0] hover:bg-[#222] hover:border-[#555] hover:text-white transition"
-          >
+className="px-4 md:px-7 py-1 md:py-2 rounded-full border border-[#3a3a3a] text-[#d0d0d0] hover:bg-[#222] hover:border-[#555] hover:text-white transition text-sm md:text-base"          >
             Logout
           </button>
         )}

@@ -276,13 +276,13 @@ drop-shadow-[0_10px_30px_rgba(255,215,0,0.5)]"
     ? (e) => { e.preventDefault(); updateRestaurant(); } 
     : addRestaurant
   }
-  className="mb-10 p-8 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl"
+className="mb-10 p-4 md:p-8 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl w-full"
 >
   <h2 className="text-2xl font-bold mb-6">
     {editId ? "✏️ Edit Restaurant" : "➕ Add Restaurant"}
   </h2>
 
-  <div className="grid md:grid-cols-3 gap-6">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
 
     <input
       placeholder="Restaurant Name"
@@ -324,11 +324,11 @@ drop-shadow-[0_10px_30px_rgba(255,215,0,0.5)]"
       placeholder="About restaurant..."
       value={form.about}
       onChange={(e) => setForm({ ...form, about: e.target.value })}
-      className="p-3 rounded-xl bg-white/20 focus:ring-2 focus:ring-pink-400 outline-none col-span-3"
+      className="p-3 rounded-xl bg-white/20 focus:ring-2 focus:ring-pink-400 outline-none col-span-1 md:col-span-3"
     />
   </div>
 
-  <div className="flex gap-4 mt-6">
+  <div className="flex flex-col md:flex-row gap-3 md:gap-4 mt-6">
     {editId ? (
       <>
         <button
