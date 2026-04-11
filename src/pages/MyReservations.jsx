@@ -26,12 +26,12 @@ function MyReservations() {
   }, []);
 
   const fetchReservations = async () => {
-    const res = await API.get("/reservations/my");
+    const res = await API.get("api/reservations/my");
     setReservations(res.data.reservations || []);
   };
 
   const fetchReviews = async () => {
-    const res = await API.get("/reviews/my");
+    const res = await API.get("api/reviews/my");
     setReviews(res.data || []);
   };
 
@@ -46,7 +46,7 @@ function MyReservations() {
 
     if (total <= 0) return alert("Price is 0 ❌");
 
-    const res = await API.post("/stripe/checkout", {
+    const res = await API.post("api/stripe/checkout", {
       restaurantName: r.restaurant?.name || "Restaurant Booking",
       price: total,
       reservationId: r._id,
@@ -56,12 +56,12 @@ function MyReservations() {
   };
 
   const handleCancel = async (id) => {
-    await API.delete(`/reservations/${id}`);
+    await API.delete(`api/reservations/${id}`);
     fetchReservations();
   };
 
   const handleUpdate = async (id) => {
-    const res = await API.put(`/reservations/${id}`, {
+    const res = await API.put(`api/reservations/${id}`, {
       date: editDate,
       time: editTime,
       partySize: editSize,
@@ -72,7 +72,7 @@ function MyReservations() {
     if (extraToPay > 0) {
       alert(`Extra payment needed: ₹${extraToPay}`);
 
-      const payRes = await API.post("/stripe/checkout", {
+      const payRes = await API.post("api/stripe/checkout", {
         restaurantName: "Extra Payment",
         price: extraToPay,
         reservationId: id,
@@ -93,7 +93,7 @@ function MyReservations() {
   };
 
   const addReview = async (restaurantId) => {
-    await API.post("/reviews", {
+    await API.post("api/reviews", {
       restaurant: restaurantId,
       rating: editRating,
       comment: editComment,
@@ -104,7 +104,7 @@ function MyReservations() {
   };
 
   const deleteReview = async (id) => {
-    await API.delete(`/reviews/${id}`);
+    await API.delete(`api/reviews/${id}`);
     fetchReviews();
   };
 

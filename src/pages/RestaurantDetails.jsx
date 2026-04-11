@@ -22,17 +22,17 @@ function RestaurantDetails() {
   }, []);
 
   const fetchDetails = async () => {
-    const res = await API.get(`/restaurants/${id}`);
+    const res = await API.get(`api/restaurants/${id}`);
     setRestaurant(res.data);
   };
 
   const fetchReviews = async () => {
-    const res = await API.get(`/reviews/restaurant/${id}`);
+    const res = await API.get(`api/reviews/restaurant/${id}`);
     setReviews(res.data);
   };
 
   const checkAvailability = async () => {
-    const res = await API.get("/reservations/check", {
+    const res = await API.get("api/reservations/check", {
       params: { restaurant: id, date, time },
     });
     setAvailableSeats(res.data.availableSeats);
@@ -48,7 +48,7 @@ function RestaurantDetails() {
     }
 
     try {
-      await API.post("/reservations", {
+      await API.post("api/reservations", {
         restaurant: id,
         date,
         time,

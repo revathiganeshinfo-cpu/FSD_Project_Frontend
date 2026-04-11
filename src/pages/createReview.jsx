@@ -16,7 +16,7 @@ function CreateReview({ restaurantId }) {
         return;
       }
 
-      await API.post("/reviews", {
+      await API.post("api/reviews", {
         restaurant: restaurantId,
         rating: Number(rating),
         comment,

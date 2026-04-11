@@ -21,7 +21,7 @@ export default function Restaurants() {
   const fetchRestaurants = async () => {
     setLoading(true);
     try {
-      const res = await API.get("/restaurants");
+      const res = await API.get("/api/restaurants");
       setRestaurants(res.data);
     } catch (err) {
       console.log(err);
@@ -44,7 +44,7 @@ if (price) params.price = price;
 
     console.log("PARAMS:", params);
 
-    const res = await API.get("/restaurants/search", { params });
+    const res = await API.get("api/restaurants/search", { params });
 
     console.log("RESULT:", res.data);
 

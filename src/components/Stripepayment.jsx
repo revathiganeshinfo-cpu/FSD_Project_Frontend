@@ -9,7 +9,7 @@ function StripePayment({ reservation }) {
     setLoading(true);
 
     try {
-      const res = await API.post("/stripe/checkout", {
+      const res = await API.post("api/stripe/checkout", {
         restaurantName: reservation.restaurantName,
         price: reservation.price || 500,
         reservationId: reservation._id,

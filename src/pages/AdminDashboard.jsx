@@ -13,7 +13,7 @@ export default function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const res = await API.get("/admin/users");
+      const res = await API.get("api/admin/users");
       setUsers(Array.isArray(res.data) ? res.data : res.data.users || []);
     } catch (err) {
       console.error(err);
@@ -37,7 +37,7 @@ export default function AdminDashboard() {
 
   const fetchRestaurants = async () => {
     try {
-      const res = await API.get("/restaurants");
+      const res = await API.get("api/restaurants");
       setRestaurants(res.data || []);
     } catch (err) {
       console.error(err);
@@ -47,7 +47,7 @@ export default function AdminDashboard() {
   const addRestaurant = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/admin/restaurants", {
+      await API.post("api/admin/restaurants", {
         name: form.name,
         location: form.location,
         cuisine: "General",
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
   };
   const updateRestaurant = async () => {
     try {
-      await API.put(`/admin/restaurants/${editId}`, {
+      await API.put(`api/admin/restaurants/${editId}`, {
         name: form.name,
         location: form.location,
         cuisine: form.cuisine,
@@ -85,7 +85,7 @@ export default function AdminDashboard() {
 
   const deleteRestaurant = async (id) => {
     try {
-      await API.delete(`/admin/restaurants/${id}`);
+      await API.delete(`api/admin/restaurants/${id}`);
       fetchRestaurants();
     } catch (err) {
       console.error(err);
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
 
   const fetchReservations = async () => {
     try {
-      const res = await API.get("/admin/reservations");
+      const res = await API.get("api/admin/reservations");
       setReservations(res.data || []);
     } catch (err) {
       console.error(err);
@@ -110,7 +110,7 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await API.get("/admin/stats");
+      const res = await API.get("api/admin/stats");
       setStats(res.data.stats);
     } catch (err) {
       console.error(err);
