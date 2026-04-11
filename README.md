@@ -30,5 +30,4 @@ Email: admin@gmail.com
 Password: 123456
 📍 Admin Route
 After login :
-http://localhost:5173/admin
-
+https://fsd-project-frontend.vercel.app/admin
