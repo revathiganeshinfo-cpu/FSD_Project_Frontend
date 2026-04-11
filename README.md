@@ -31,3 +31,8 @@ Password: 123456
 📍 Admin Route
 After login :
 https://fsd-project-frontend.vercel.app/admin
+
+Payment Card Details
+Card Number: 4242 4242 4242 4242
+Expiry: Any future date (e.g. 12/34)
+CVC: Any 3 digits (e.g. 123)
