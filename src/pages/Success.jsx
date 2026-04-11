@@ -28,7 +28,7 @@ function Success() {
     };
 
     updatePayment();
-  }, []);
+  }, [reservationId, navigate]);
 
   return (
     <div className="h-screen flex items-center justify-center bg-green-500 text-white text-center">
