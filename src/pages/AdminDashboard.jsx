@@ -5,8 +5,11 @@ import {  Store,  IndianRupee, TrendingUp } from "lucide-react";
 import { Mail, ShieldCheck,Activity,Search,
   Filter,} from "lucide-react";
 import logo from "../assets/logo1.png";
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 0ce2882 (navbar and admin dashboard logo fix)
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("users");
 
