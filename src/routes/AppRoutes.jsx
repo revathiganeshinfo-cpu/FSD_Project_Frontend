@@ -22,9 +22,7 @@
     <Route path="/success" element={<Success />} />
      
           {/* IMPORTANT */}
-      <Route path="/success" element={<Success />} />
-      <Route path="/cancel" element={<Cancel />} />
-      <Route path="/admin" element={<AdminDashboard />} />
+     <Route path="/admin" element={<AdminDashboard />} />
 
 
       </Routes>
