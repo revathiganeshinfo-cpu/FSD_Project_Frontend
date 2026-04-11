@@ -23,7 +23,7 @@ function Success() {
 
     const updatePayment = async () => {
       try {
-        await API.put(`api/reservations/pay/${reservationId}`);
+        await API.put(`/api/reservations/pay/${reservationId}`);
 
         console.log("✅ Payment updated");
 

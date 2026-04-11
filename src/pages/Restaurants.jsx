@@ -44,7 +44,7 @@ if (price) params.price = price;
 
     console.log("PARAMS:", params);
 
-    const res = await API.get("api/restaurants/search", { params });
+    const res = await API.get("/api/restaurants/search", { params });
 
     console.log("RESULT:", res.data);
 
