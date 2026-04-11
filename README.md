@@ -31,7 +31,7 @@ Password: 123456
 📍 Admin Route
 After login :
 https://fsd-project-frontend.vercel.app/admin
-
+](https://fsd-project-frontend-git-main-guvi2.vercel.app/adm)
 Payment Card Details
 Card Number: 4242 4242 4242 4242
 Expiry: Any future date (e.g. 12/34)
