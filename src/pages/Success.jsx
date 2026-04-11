@@ -6,55 +6,36 @@ function Success() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
+  const reservationId = params.get("reservationId");
+
   useEffect(() => {
-    const reservationId = params.get("reservationId");
-
-    console.log("Reservation ID:", reservationId);
-
     if (!reservationId) {
-      console.log("❌ No reservationId");
-
-      setTimeout(() => {
-        navigate("/my-reservations");
-      }, 1500);
-
+      navigate("/my-reservations");
       return;
     }
 
     const updatePayment = async () => {
       try {
         await API.put(`/api/reservations/pay/${reservationId}`);
-
-        console.log("✅ Payment updated");
-
-        setTimeout(() => {
-          navigate("/my-reservations");
-        }, 1500);
-
       } catch (err) {
-        console.log("❌ Payment update failed", err);
-
-        setTimeout(() => {
-          navigate("/my-reservations");
-        }, 1500);
+        console.log(err);
       }
+
+      // ALWAYS redirect after 1 sec
+      setTimeout(() => {
+        navigate("/my-reservations");
+      }, 1000);
     };
 
     updatePayment();
-
-  }, [params, navigate]);
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-green-400 to-emerald-600 text-white">
-      
-      <h1 className="text-4xl font-bold mb-4">
-        ✅ Payment Successful
-      </h1>
-
-      <p className="text-lg">
-        Redirecting to your reservations...
-      </p>
-
+    <div className="h-screen flex items-center justify-center bg-green-500 text-white text-center">
+      <div>
+        <h1 className="text-4xl font-bold">Payment Successful 🎉</h1>
+        <p className="mt-2">Redirecting...</p>
+      </div>
     </div>
   );
 }
