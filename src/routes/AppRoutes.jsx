@@ -20,7 +20,12 @@
         <Route path="/restaurants/:id" element={<RestaurantDetails />} />
       <Route path="/my-reservations" element={<MyReservations />} />
     <Route path="/success" element={<Success />} />
+     
+          {/* IMPORTANT */}
+      <Route path="/success" element={<Success />} />
+      <Route path="/cancel" element={<Cancel />} />
       <Route path="/admin" element={<AdminDashboard />} />
+
 
       </Routes>
     );
