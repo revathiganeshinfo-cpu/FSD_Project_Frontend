@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Home, Utensils, Calendar, LogOut } from "lucide-react";
+import logo from "../assets/logo1.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
 
 <img
-  src=".\src\assets\logo1.png"
+  src={logo}
   alt="logo"
   className="w-10 h-10 md:w-12 md:h-12 object-cover rounded-full
   shadow-[0_0_20px_rgba(255,215,0,0.5)]
