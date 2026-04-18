@@ -14,11 +14,19 @@ export default function Login() {
     try {
       const res = await API.post("/api/auth/login", { email, password });
       localStorage.setItem("user", JSON.stringify(res.data));
-      navigate("/");
-    } catch (err) {
-      alert("Invalid Email / Password");
-    }
-  };
+      
+     const role = res.data.user?.role || res.data.role;
+
+if (role === "admin") {
+  navigate("/admin");
+} else {
+  navigate("/");
+}
+
+  } catch (err) {
+    alert("Invalid Email / Password");
+  }
+};
 
   return (
     <div className="min-h-screen grid md:grid-cols-2">
