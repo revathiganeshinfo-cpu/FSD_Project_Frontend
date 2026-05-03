@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
-import { motion, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 
 function MyReservations() {
   const [reservations, setReservations] = useState([]);
@@ -14,26 +14,39 @@ function MyReservations() {
   const [editRating, setEditRating] = useState(5);
   const [editComment, setEditComment] = useState("");
 
-  useEffect(() => {
-    fetchReservations();
-    fetchReviews();
 
-    const interval = setInterval(() => {
-      fetchReservations();
-    }, 2000);
 
-    return () => clearInterval(interval);
-  }, []);
+const fetchReservations = async () => {
+  const res = await API.get("/api/reservations/my");
+    console.log("Cancel response:", res.data);
+  const data = res.data.reservations || [];
 
-  const fetchReservations = async () => {
-    const res = await API.get("/api/reservations/my");
-    setReservations(res.data.reservations || []);
+  setReservations((prev) => {
+    return data.map((r) => {
+      const old = prev.find((p) => p._id === r._id);
+
+      if (old?.status === "cancelled") {
+        return { ...r, status: "cancelled" };
+      }
+
+      return r;
+    });
+  });
+};
+
+const fetchReviews = async () => {
+  const res = await API.get("/api/reviews/my");
+  setReviews(res.data || []);
+};
+
+useEffect(() => {
+  const loadData = async () => {
+    await fetchReservations();
+    await fetchReviews();
   };
 
-  const fetchReviews = async () => {
-    const res = await API.get("/api/reviews/my");
-    setReviews(res.data || []);
-  };
+  loadData();
+}, []);
 
   const handlePayment = async (r) => {
     if (r.paidAmount >= r.totalAmount) {
@@ -52,13 +65,18 @@ function MyReservations() {
       reservationId: r._id,
     });
 
-    window.location.href = res.data.url;
+window.open(res.data.url, "_self");
   };
 
-  const handleCancel = async (id) => {
-    await API.delete(`/api/reservations/${id}`);
-    fetchReservations();
-  };
+ const handleCancel = async (id) => {
+  await API.delete(`/api/reservations/${id}`);
+
+  setReservations((prev) =>
+    prev.map((r) =>
+      r._id === id ? { ...r, status: "cancelled" } : r
+    )
+  );
+};
 
   const handleUpdate = async (id) => {
     const res = await API.put(`/api/reservations/${id}`, {
@@ -78,8 +96,8 @@ function MyReservations() {
         reservationId: id,
       });
 
-      window.location.href = payRes.data.url;
-      return;
+window.open(payRes.data.url, "_self");      
+return;
     }
 
     if (refundAmount > 0) {
@@ -139,6 +157,7 @@ function MyReservations() {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {reservations.map((r, i) => {
+            const isCancelled = r.status === "cancelled";
             const price = r.restaurant?.price;
             const total = price * r.partySize;
 
@@ -164,20 +183,31 @@ function MyReservations() {
 
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 opacity-0 group-hover:opacity-40 blur-xl transition" />
 
-                <div className="relative bg-white/10 backdrop-blur-2xl p-6 rounded-3xl border border-white/20 shadow-2xl">
-
+<div
+  className={`relative bg-white/10 backdrop-blur-2xl p-6 rounded-3xl border border-white/20 shadow-2xl ${
+    isCancelled ? "opacity-50 pointer-events-none" : ""
+  }`}
+>
                   <div className="flex justify-between items-center mb-3">
                     <h3 className="text-xl font-semibold">
                       {r.restaurant?.name || "Deleted ❌"}
                     </h3>
 
-                    <span className={`text-xs px-3 py-1 rounded-full ${
-                      isPaid
-                        ? "bg-green-500/20 text-green-400"
-                        : "bg-yellow-500/20 text-yellow-300"
-                    }`}>
-                      {isPaid ? "paid" : "pending"}
-                    </span>
+                   <span
+  className={`text-xs px-3 py-1 rounded-full ${
+    r.status === "cancelled"
+      ? "bg-red-500/20 text-red-400"
+      : isPaid
+      ? "bg-green-500/20 text-green-400"
+      : "bg-yellow-500/20 text-yellow-300"
+  }`}
+>
+  {r.status === "cancelled"
+    ? "cancelled"
+    : isPaid
+    ? "paid"
+    : "pending"}
+</span>
                   </div>
 
                   <p className="text-gray-300 text-sm">
@@ -235,12 +265,21 @@ function MyReservations() {
                           Edit
                         </button>
 
-                        <button
-                          onClick={() => handleCancel(r._id)}
-                          className="bg-red-500 px-3 py-1 rounded hover:bg-red-600"
-                        >
-                          Cancel
-                        </button>
+                       {r.status === "cancelled" ? (
+  <button
+    disabled
+    className="bg-gray-500 px-3 py-1 rounded cursor-not-allowed"
+  >
+    Cancelled
+  </button>
+) : (
+  <button
+    onClick={() => handleCancel(r._id)}
+    className="bg-red-500 px-3 py-1 rounded hover:bg-red-600"
+  >
+    Cancel
+  </button>
+)}
 
                         {isPaid ? (
                           <button disabled className="bg-green-600 px-3 py-1 rounded opacity-70">

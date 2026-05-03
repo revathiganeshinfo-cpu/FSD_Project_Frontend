@@ -182,10 +182,11 @@
         
   <div className="flex flex-wrap gap-3 pt-8  pl-6 mb-8">
     {[
+            { key: "revenue", label: "💰 Dashboard", color: "purple" },
+
       { key: "users", label: "👥 Users", color: "blue" },
       { key: "restaurants", label: "🍽 Restaurants", color: "green" },
       { key: "reservations", label: "📅 Reservations", color: "yellow" },
-      { key: "revenue", label: "💰 Revenue", color: "purple" },
     ].map((tab) => (
       <button
         key={tab.key}
@@ -607,13 +608,13 @@
 
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold text-white flex items-center gap-2">
-          <TrendingUp className="text-green-400" /> Revenue Dashboard
+          <TrendingUp className="text-green-400" />  Dashboard
         </h2>
         <p className="text-gray-300 text-sm">Overview of platform performance</p>
       </div>
 
       <div className="grid md:grid-cols-4 gap-6">
-
+    
 
 
         <div className="bg-gradient-to-br from-blue-500/20 to-blue-700/20 backdrop-blur-lg border border-white/20 p-5 rounded-2xl shadow-lg hover:scale-105 transition">

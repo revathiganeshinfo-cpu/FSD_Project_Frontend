@@ -16,12 +16,8 @@ function RestaurantDetails() {
   const [partySize, setPartySize] = useState(1);
   const [availableSeats, setAvailableSeats] = useState(null);
 
-  useEffect(() => {
-    fetchDetails();
-    fetchReviews();
-  }, []);
 
-  const fetchDetails = async () => {
+   const fetchDetails = async () => {
     const res = await API.get(`/api/restaurants/${id}`);
     setRestaurant(res.data);
   };
@@ -30,6 +26,13 @@ function RestaurantDetails() {
     const res = await API.get(`/api/reviews/restaurant/${id}`);
     setReviews(res.data);
   };
+  
+  useEffect(() => {
+    fetchDetails();
+    fetchReviews();
+  }, []);
+
+ 
 
   const checkAvailability = async () => {
     const res = await API.get("/api/reservations/check", {
@@ -63,6 +66,8 @@ function RestaurantDetails() {
       setPartySize(1);
 
     } catch (err) {
+        console.error(err);
+
       alert("Reservation failed / Registered and Login to book again");
     }
   };
