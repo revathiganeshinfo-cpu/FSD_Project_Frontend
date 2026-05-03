@@ -68,8 +68,15 @@ useEffect(() => {
 window.open(res.data.url, "_self");
   };
 
- const handleCancel = async (id) => {
-  await API.delete(`/api/reservations/${id}`);
+const handleCancel = async (id) => {
+  const res = await API.delete(`/api/reservations/${id}`);
+  const { refundAmount } = res.data;
+
+  if (refundAmount > 0) {
+    alert(`Reservation cancelled! ₹${refundAmount} refund will be processed to your account. 💰`);
+  } else {
+    alert("Reservation cancelled successfully! ✅");
+  }
 
   setReservations((prev) =>
     prev.map((r) =>
