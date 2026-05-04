@@ -5,6 +5,7 @@
   import { Mail, ShieldCheck,Activity,Search,
     Filter,} from "lucide-react";
   import logo from "../assets/logo1.png";
+import { AreaChart, Area, ResponsiveContainer, Tooltip } from "recharts";
 
 
 
@@ -649,15 +650,48 @@
           </h2>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500/20 to-green-700/20 backdrop-blur-lg border border-white/20 p-5 rounded-2xl shadow-lg hover:scale-105 transition">
-          <div className="flex items-center justify-between">
-            <p className="text-gray-300 text-sm">Total Revenue</p>
-            <IndianRupee className="text-green-400" size={22} />
-          </div>
-          <h2 className="text-3xl font-bold mt-3 text-green-300">
-            ₹{stats.totalRevenue}
-          </h2>
-        </div>
+       <div className="bg-gradient-to-br from-green-500/20 to-green-700/20 backdrop-blur-lg border border-white/20 p-5 rounded-2xl shadow-lg hover:scale-105 transition">
+  
+  <div className="flex items-center justify-between mb-1">
+    <p className="text-gray-300 text-sm">Total Revenue</p>
+    <IndianRupee className="text-green-400" size={22} />
+  </div>
+
+  <h2 className="text-3xl font-bold text-green-300 mb-3">
+    ₹{stats.totalRevenue}
+  </h2>
+
+  {/* Mini Wave Chart */}
+  <ResponsiveContainer width="100%" height={60}>
+    <AreaChart data={stats.chartData || []}>
+      <defs>
+        <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#22c55e" stopOpacity={0.5} />
+          <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <Tooltip
+        contentStyle={{
+          backgroundColor: "rgba(0,0,0,0.7)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: "8px",
+          color: "#fff",
+          fontSize: "11px"
+        }}
+        formatter={(value) => [`₹${value}`, "Revenue"]}
+      />
+      <Area
+        type="monotone"
+        dataKey="revenue"
+        stroke="#22c55e"
+        strokeWidth={2}
+        fill="url(#revenueGrad)"
+        dot={false}
+      />
+    </AreaChart>
+  </ResponsiveContainer>
+
+</div>
 
       </div>
 
