@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 import bgImage from "../assets/reserback.avif";  
@@ -16,7 +15,7 @@ function RestaurantDetails() {
   const [partySize, setPartySize] = useState(1);
   const [availableSeats, setAvailableSeats] = useState(null);
 
-
+ useEffect(() => {  
    const fetchDetails = async () => {
     const res = await API.get(`/api/restaurants/${id}`);
     setRestaurant(res.data);
@@ -27,10 +26,13 @@ function RestaurantDetails() {
     setReviews(res.data);
   };
   
-  useEffect(() => {
-    fetchDetails();
-    fetchReviews();
-  }, []);
+ 
+  const loadData = async () => {
+    await fetchDetails();
+    await fetchReviews();
+  };
+  loadData();
+}, [id]);
 
  
 
@@ -206,11 +208,8 @@ function RestaurantDetails() {
             </div>
           </div>
 
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            className="glass-card p-6 rounded-2xl h-fit sticky top-24"
-          >
-            <h3 className="text-xl font-semibold mb-4">📅 Book Table</h3>
+          <div className="glass-card p-6 rounded-2xl h-fit sticky top-24 hover:scale-105 transition-transform duration-300">
+
 
             <input
               type="date"
@@ -265,7 +264,7 @@ function RestaurantDetails() {
             >
               Book Now
             </button>
-          </motion.div>
+          </div>
 
         </div>
       </div>
