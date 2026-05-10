@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
-import bgImage from "../assets/reserback.avif"; // ✅ background
+import bgImage from "../assets/reserback.avif";  
 
 function RestaurantDetails() {
   const { id } = useParams();
@@ -44,6 +44,13 @@ function RestaurantDetails() {
   const navigate = useNavigate();
 
   const handleReservation = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+  if (!user?.token) {
+    alert("Please login to make a reservation! 🔐");
+    navigate("/login");
+    return;
+  }
+  
     if (!date || !time) return alert("Select date & time");
 
     if (availableSeats !== null && partySize > availableSeats) {
@@ -65,12 +72,19 @@ function RestaurantDetails() {
       await checkAvailability();
       setPartySize(1);
 
-    } catch (err) {
-        console.error(err);
+      } catch (err) {
+    console.error(err);
+    const message = err.response?.data?.message || "";
 
-      alert("Reservation failed / Registered and Login to book again");
+    if (message.includes("Admins cannot")) {
+      alert("Admins cannot make reservations! ❌");
+    } else if (message.includes("availability")) {
+      alert("No availability for this time slot ❌");
+    } else {
+      alert(message || "Reservation failed. Please try again.");
     }
-  };
+  }
+};
 
   if (!restaurant)
     return (
