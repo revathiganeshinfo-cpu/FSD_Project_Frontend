@@ -3,6 +3,11 @@ import API from "../services/api";
 import { motion } from "framer-motion";
 
 
+const isBookingPast = (date, time) => {
+  const bookingDateTime = new Date(`${date?.split("T")[0]}T${time}`);
+  return bookingDateTime < new Date();
+};
+
 function MyReservations() {
   const [reservations, setReservations] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -173,6 +178,9 @@ return;
               r.paidAmount >= r.totalAmount ||
               r.status?.toLowerCase() === "paid";
 
+const isPast = isBookingPast(r.date, r.time);
+
+
             const myReview = reviews.find(
               (rev) =>
                 (rev.restaurant?._id || rev.restaurant) ===
@@ -273,12 +281,13 @@ return;
                           Edit
                         </button>
 
-                       {r.status === "cancelled" ? (
-  <button
-    disabled
-    className="bg-gray-500 px-3 py-1 rounded cursor-not-allowed"
-  >
+                      {r.status === "cancelled" ? (
+  <button disabled className="bg-gray-500 px-3 py-1 rounded cursor-not-allowed">
     Cancelled
+  </button>
+) : isPaid || isPast ? (
+  <button disabled className="bg-gray-500 px-3 py-1 rounded opacity-50 cursor-not-allowed">
+    🔒 Cannot Cancel
   </button>
 ) : (
   <button
@@ -289,18 +298,22 @@ return;
   </button>
 )}
 
-                        {isPaid ? (
-                          <button disabled className="bg-green-600 px-3 py-1 rounded opacity-70">
-                            ✅ Paid
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handlePayment(r)}
-                            className="bg-gradient-to-r from-pink-500 to-red-500 px-3 py-1 rounded hover:scale-105 transition"
-                          >
-                            💳 Pay ₹{total}
-                          </button>
-                        )}
+{isPaid ? (
+  <button disabled className="bg-green-600 px-3 py-1 rounded opacity-70">
+    ✅ Paid
+  </button>
+) : isPast ? (
+  <button disabled className="bg-gray-500 px-3 py-1 rounded opacity-50 cursor-not-allowed">
+    ⛔ Expired
+  </button>
+) : (
+  <button
+    onClick={() => handlePayment(r)}
+    className="bg-gradient-to-r from-pink-500 to-red-500 px-3 py-1 rounded hover:scale-105 transition"
+  >
+    💳 Pay ₹{total}
+  </button>
+)}
                       </>
                     )}
                   </div>

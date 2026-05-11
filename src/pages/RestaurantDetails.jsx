@@ -220,11 +220,14 @@ function RestaurantDetails() {
             />
 
             <input
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              className="w-full mb-3 input-premium"
-            />
+  type="time"
+  value={time}
+  min={date === new Date().toISOString().split("T")[0] 
+    ? new Date().toTimeString().slice(0, 5) 
+    : "00:00"}
+  onChange={(e) => setTime(e.target.value)}
+  className="w-full mb-3 input-premium"
+/>
 
             <input
               type="number"
